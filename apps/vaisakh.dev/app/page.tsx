@@ -1,64 +1,125 @@
-import Image from "next/image";
+// ── Edit your content here ──────────────────────────────────────────────────
+
+const NAV = [
+  { label: "home", href: "/" },
+  { label: "writing", href: "/writing" },
+  { label: "work?", href: "/work" },
+];
+
+const SOCIALS = [
+  { label: "x/twitter", href: "https://x.com/" },
+  { label: "github", href: "https://github.com/vaisakh678" },
+];
+
+const PROJECTS = [
+  { label: "project-one", href: "#" },
+  { label: "project-two", href: "#" },
+  { label: "project-three", href: "#" },
+];
+
+const TIMELINE = [
+  { text: "building things on the side", date: "2026" },
+  { text: "shipped something small", date: "2025" },
+  { text: "started writing more", date: "2025" },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+
+function Link({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
+  const external = href.startsWith("http");
+  return (
+    <a
+      href={href}
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      className="text-foreground underline decoration-border underline-offset-4 transition-colors hover:decoration-foreground"
+    >
+      {children}
+    </a>
+  );
+}
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div className="flex flex-1 flex-col items-center px-6 py-16 sm:py-24">
+      <main className="flex w-full max-w-xl flex-col gap-12 text-sm leading-relaxed sm:text-[15px]">
+        {/* nav */}
+        <nav className="flex flex-col gap-3 text-muted sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-wrap gap-x-4 gap-y-1">
+            {NAV.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                className="transition-colors hover:text-foreground"
+              >
+                [{item.label}]
+              </a>
+            ))}
+          </div>
+          <div className="flex flex-wrap gap-x-4 gap-y-1">
+            {SOCIALS.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition-colors hover:text-foreground"
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
+        </nav>
+
+        <hr className="border-border" />
+
+        {/* intro */}
+        <section className="flex flex-col gap-2">
+          <h1 className="text-2xl font-semibold tracking-tight text-foreground">
+            vaisakh.
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-muted">
+            doing things on the internet. building, breaking, learning.
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+        </section>
+
+        <hr className="border-border" />
+
+        {/* projects */}
+        <section className="flex flex-col gap-3">
+          <p className="text-muted">some stuff that i&apos;ve made:</p>
+          <ul className="flex flex-col gap-1.5">
+            {PROJECTS.map((p) => (
+              <li key={p.label} className="flex items-baseline gap-2">
+                <span className="text-muted">-</span>
+                <Link href={p.href}>{p.label}</Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <hr className="border-border" />
+
+        {/* timeline */}
+        <section className="flex flex-col gap-3">
+          <p className="text-muted">timeline:</p>
+          <ul className="flex flex-col gap-2">
+            {TIMELINE.map((t, i) => (
+              <li
+                key={i}
+                className="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4"
+              >
+                <span className="text-foreground">{t.text}</span>
+                <span className="shrink-0 text-muted">{t.date}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
       </main>
     </div>
   );
